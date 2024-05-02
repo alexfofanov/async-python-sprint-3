@@ -3,6 +3,8 @@ import signal
 
 from aioconsole import ainput
 
+from config import logger
+
 EXIT_COMMAND = 'quit'
 
 
@@ -49,10 +51,10 @@ class Client:
         while True:
             response: bytes = await self._reader.read(1000)
             if not response:
-                print('Closed by the server')
+                logger.info('Closed by the server')
                 self._stop_event.set()
                 break
-            print(response.decode())
+            logger.info(f'{response.decode()}')
 
     async def _stop_client_task(self) -> None:
         """
